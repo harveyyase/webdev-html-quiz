@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Friends</title>
+  <style>
+    body {
+      font-family: Arial, serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+    }
+
+    .topnav {
+      overflow: hidden;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #cccccc;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .topnav div {
+      color: #000000;
+      text-align: center;
+      padding: 8px;
+      font-size: 17px;
+      white-space: nowrap;
+    }
+
+    .topnav a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 96px;
+      font-weight: normal;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
+    }
+
+    .card {
+      background-color: #eee;
+      padding: 16px;
+      border-radius: 2px;
+      font-size: 16px;
+      line-height: 1.6;
+      font-family: "Times New Roman", Times, serif;
+      color: #000;
+    }
+
+    .card p {
+      margin: 0 0 8px 0;
+    }
+
+    .card a {
+      color: #0645ad;
+      text-decoration: underline;
+    }
+
+    .card em {
+      display: block;
+      font-style: italic;
+      margin-top: 8px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topnav">
+    <a href="index.html">Facebook</a>
+    <a class="Friends" href="friends.html">Friends</a>
+  </div>
+
+  <main>
+    <h1>WELCOME TO<br>FRIENDS</h1>
+    <div id="card-container" class="card-container"></div>
+  </main>
+
+  <script>
+    // Grabbing the container to append the user cards
+    const container = document.getElementById("card-container");
+
+    // Fetching user data from the API
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(response => response.json())
+      .then(users => {
+        users.forEach(user => {
+          // Creating a new div for each user card
+          const card = document.createElement("div");
+          card.className = "card";
+
+          // Inserting user details into the card
+          card.innerHTML = `
+            <p>
+              <strong>${user.name} @${user.username}</strong><br>
+              City: ${user.address.city}<br>
+              Website: <a href="http://${user.website}" target="_blank">${user.website}</a><br>
+              ${user.company.name}<br>
+              <em>${user.company.catchPhrase}</em>
+            </p>
+          `;
+
+          // Appending the card to the container
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        // Handling errors if fetching fails
+        container.innerHTML = "<p>Failed to load users. Please try again later.</p>";
+        console.error("Error fetching users:", error);
+      });
+  </script>
+</body>
+
+</html>
