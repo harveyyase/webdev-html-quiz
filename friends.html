@@ -99,7 +99,7 @@
   </main>
 
   <script>
-    // Grabbing the container to append the user cards
+    
     const container = document.getElementById("card-container");
 
     // Fetching user data from the API
@@ -107,14 +107,14 @@
       .then(response => response.json())
       .then(users => {
         users.forEach(user => {
-          // Creating a new div for each user card
+        
           const card = document.createElement("div");
           card.className = "card";
 
-          // Inserting user details into the card
+          
           card.innerHTML = `
             <p>
-              <strong>${user.name} @${user.username}</strong><br>
+              ${user.name} @${user.username}<br>
               City: ${user.address.city}<br>
               Website: <a href="http://${user.website}" target="_blank">${user.website}</a><br>
               ${user.company.name}<br>
@@ -122,12 +122,12 @@
             </p>
           `;
 
-          // Appending the card to the container
+          
           container.appendChild(card);
         });
       })
       .catch(error => {
-        // Handling errors if fetching fails
+       
         container.innerHTML = "<p>Failed to load users. Please try again later.</p>";
         console.error("Error fetching users:", error);
       });
